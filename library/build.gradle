@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion COMPILE_SDK_VERSION as int
@@ -24,12 +23,3 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$SUPPORT_LIB_VERSION"
 }
 
-publish {
-    userOrg = POM_DEVELOPER_ID
-    groupId = GROUP
-    artifactId = ARTIFACT_ID
-    uploadName = ARTIFACT_NAME
-    publishVersion = VERSION_NAME
-    desc = POM_DESCRIPTION
-    website = POM_URL
-}
