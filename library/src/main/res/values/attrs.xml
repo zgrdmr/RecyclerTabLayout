@@ -20,6 +20,8 @@
         <attr name="rtl_tabPadding" format="dimension"/>
 
         <attr name="rtl_scrollEnabled" format="boolean"/>
+        <attr name="rtl_indicatorInverted" format="boolean"/>
+        <attr name="rtl_indicatorPadding" format="dimension"/>
 
     </declare-styleable>
 </resources>

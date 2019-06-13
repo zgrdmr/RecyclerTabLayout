@@ -54,6 +54,8 @@ public class RecyclerTabLayout extends RecyclerView {
     protected int mTabPaddingEnd;
     protected int mTabPaddingBottom;
     protected int mIndicatorHeight;
+    protected boolean mIndicatorInverted;
+    protected int mIndicatorPadding;
 
     protected LinearLayoutManager mLinearLayoutManager;
     protected RecyclerOnScrollListener mRecyclerOnScrollListener;
@@ -116,6 +118,9 @@ public class RecyclerTabLayout extends RecyclerView {
                 R.styleable.rtl_RecyclerTabLayout_rtl_tabPaddingEnd, mTabPaddingEnd);
         mTabPaddingBottom = a.getDimensionPixelSize(
                 R.styleable.rtl_RecyclerTabLayout_rtl_tabPaddingBottom, mTabPaddingBottom);
+
+        mIndicatorInverted = a.getBoolean(R.styleable.rtl_RecyclerTabLayout_rtl_indicatorInverted, false);
+        mIndicatorPadding = a.getDimensionPixelSize(R.styleable.rtl_RecyclerTabLayout_rtl_indicatorPadding, 0);
 
         if (a.hasValue(R.styleable.rtl_RecyclerTabLayout_rtl_tabSelectedTextColor)) {
             mTabSelectedTextColor = a
@@ -346,12 +351,23 @@ public class RecyclerTabLayout extends RecyclerView {
             right = view.getRight() + mIndicatorScroll + mIndicatorGap;
         }
 
-//        int top = getHeight() - mIndicatorHeight;
-//        int bottom = getHeight();
+        int height = getHeight();
+        int top = height - mIndicatorHeight;
+        int bottom = height + mIndicatorPadding;
 
         //indicator inverted
-        int top = mTabPaddingTop;
-        int bottom = top + mIndicatorHeight;
+        if (mIndicatorInverted) {
+            int diff = mTabPaddingTop - mIndicatorPadding;
+            if (diff < 0) {
+
+                top = 0;
+                bottom = top + mIndicatorHeight + (diff * -1);
+            } else {
+
+                top = diff;
+            }
+        }
+
 
         canvas.drawRect(left, top, right, bottom, mIndicatorPaint);
     }
