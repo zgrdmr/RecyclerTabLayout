@@ -122,9 +122,11 @@ public class RecyclerTabLayout extends RecyclerView {
         mTabPaddingBottom = a.getDimensionPixelSize(
                 R.styleable.rtl_RecyclerTabLayout_rtl_tabPaddingBottom, mTabPaddingBottom);
 
+        //new
         mIndicatorInverted = a.getBoolean(R.styleable.rtl_RecyclerTabLayout_rtl_indicatorInverted, false);
         mIndicatorGapFix = a.getDimensionPixelSize(R.styleable.rtl_RecyclerTabLayout_rtl_indicatorGapFix, 0);
         mIndicatorRadius = a.getDimensionPixelSize(R.styleable.rtl_RecyclerTabLayout_rtl_indicatorRadius, 0);
+
 
         if (a.hasValue(R.styleable.rtl_RecyclerTabLayout_rtl_tabSelectedTextColor)) {
             mTabSelectedTextColor = a
