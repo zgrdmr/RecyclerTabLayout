@@ -58,6 +58,7 @@ public class RecyclerTabLayout extends RecyclerView {
     protected boolean mIndicatorInverted;
     protected RectF indicatorRectF = new RectF(0,0,0,0);
     protected int mIndicatorGapFix;
+    protected int mIndicatorRadius;
 
     protected LinearLayoutManager mLinearLayoutManager;
     protected RecyclerOnScrollListener mRecyclerOnScrollListener;
@@ -123,6 +124,7 @@ public class RecyclerTabLayout extends RecyclerView {
 
         mIndicatorInverted = a.getBoolean(R.styleable.rtl_RecyclerTabLayout_rtl_indicatorInverted, false);
         mIndicatorGapFix = a.getDimensionPixelSize(R.styleable.rtl_RecyclerTabLayout_rtl_indicatorGapFix, 0);
+        mIndicatorRadius = a.getDimensionPixelSize(R.styleable.rtl_RecyclerTabLayout_rtl_indicatorRadius, 0);
 
         if (a.hasValue(R.styleable.rtl_RecyclerTabLayout_rtl_tabSelectedTextColor)) {
             mTabSelectedTextColor = a
@@ -368,7 +370,7 @@ public class RecyclerTabLayout extends RecyclerView {
         indicatorRectF.right = right;
         indicatorRectF.bottom = bottom;
 
-        canvas.drawRoundRect(indicatorRectF, 20, 20, mIndicatorPaint);
+        canvas.drawRoundRect(indicatorRectF, mIndicatorRadius, mIndicatorRadius, mIndicatorPaint);
 //        canvas.drawRect(left, top, right, bottom, mIndicatorPaint);
     }
 

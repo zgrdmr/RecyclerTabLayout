@@ -23,6 +23,7 @@
         <attr name="rtl_indicatorInverted" format="boolean"/>
 
         <attr name="rtl_indicatorGapFix" format="dimension"/>
+        <attr name="rtl_indicatorRadius" format="dimension" />
 
     </declare-styleable>
 </resources>
