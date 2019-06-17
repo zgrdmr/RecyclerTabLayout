@@ -22,6 +22,7 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.content.res.AppCompatResources;
@@ -55,7 +56,8 @@ public class RecyclerTabLayout extends RecyclerView {
     protected int mTabPaddingBottom;
     protected int mIndicatorHeight;
     protected boolean mIndicatorInverted;
-    protected int mIndicatorPadding;
+    protected RectF indicatorRectF = new RectF(0,0,0,0);
+    protected int mIndicatorGapFix;
 
     protected LinearLayoutManager mLinearLayoutManager;
     protected RecyclerOnScrollListener mRecyclerOnScrollListener;
@@ -120,7 +122,7 @@ public class RecyclerTabLayout extends RecyclerView {
                 R.styleable.rtl_RecyclerTabLayout_rtl_tabPaddingBottom, mTabPaddingBottom);
 
         mIndicatorInverted = a.getBoolean(R.styleable.rtl_RecyclerTabLayout_rtl_indicatorInverted, false);
-        mIndicatorPadding = a.getDimensionPixelSize(R.styleable.rtl_RecyclerTabLayout_rtl_indicatorPadding, 0);
+        mIndicatorGapFix = a.getDimensionPixelSize(R.styleable.rtl_RecyclerTabLayout_rtl_indicatorGapFix, 0);
 
         if (a.hasValue(R.styleable.rtl_RecyclerTabLayout_rtl_tabSelectedTextColor)) {
             mTabSelectedTextColor = a
@@ -266,12 +268,12 @@ public class RecyclerTabLayout extends RecyclerView {
 
                 if (position == 0) {
                     float indicatorGap = (nextView.getMeasuredWidth() - selectedView.getMeasuredWidth()) / 2;
-                    mIndicatorGap = (int) (indicatorGap * positionOffset);
+                    mIndicatorGap = (int) (indicatorGap * positionOffset) - mIndicatorGapFix;
                     mIndicatorScroll = (int)((selectedView.getMeasuredWidth() + indicatorGap)  * positionOffset);
 
                 } else {
                     float indicatorGap = (nextView.getMeasuredWidth() - selectedView.getMeasuredWidth()) / 2;
-                    mIndicatorGap = (int) (indicatorGap * positionOffset);
+                    mIndicatorGap = (int) (indicatorGap * positionOffset) - mIndicatorGapFix;
                     mIndicatorScroll = (int) dx;
                 }
 
@@ -353,23 +355,21 @@ public class RecyclerTabLayout extends RecyclerView {
 
         int height = getHeight();
         int top = height - mIndicatorHeight;
-        int bottom = height + mIndicatorPadding;
+        int bottom = height;
 
         //indicator inverted
         if (mIndicatorInverted) {
-            int diff = mTabPaddingTop - mIndicatorPadding;
-            if (diff < 0) {
-
-                top = 0;
-                bottom = top + mIndicatorHeight + (diff * -1);
-            } else {
-
-                top = diff;
-            }
+            top = 0;
+            bottom = mIndicatorHeight;
         }
 
+        indicatorRectF.left = left;
+        indicatorRectF.top = top;
+        indicatorRectF.right = right;
+        indicatorRectF.bottom = bottom;
 
-        canvas.drawRect(left, top, right, bottom, mIndicatorPaint);
+        canvas.drawRoundRect(indicatorRectF, 20, 20, mIndicatorPaint);
+//        canvas.drawRect(left, top, right, bottom, mIndicatorPaint);
     }
 
     protected boolean isLayoutRtl() {

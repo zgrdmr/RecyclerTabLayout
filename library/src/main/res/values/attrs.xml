@@ -21,7 +21,8 @@
 
         <attr name="rtl_scrollEnabled" format="boolean"/>
         <attr name="rtl_indicatorInverted" format="boolean"/>
-        <attr name="rtl_indicatorPadding" format="dimension"/>
+
+        <attr name="rtl_indicatorGapFix" format="dimension"/>
 
     </declare-styleable>
 </resources>
